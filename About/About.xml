@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>More Custom Ideoligions</name>
+  <author>synthe0n</author>
+  <packageId>eth0net.MoreCustomIdeoligions</packageId>
+  <!-- <url>steam://url/CommunityFilePage/xxx</url> -->
+  <supportedVersions>
+    <li>1.5</li>
+  </supportedVersions>
+  <description>Make multiple custom ideoligions when starting a save!
+
+    Commissioned in the RimWorld Mod Market
+
+== Features ==
+
+    Changes the game create steps to allow multiple custom ideoligions to be created.
+
+== Existing Saves ==
+
+This mod is safe to add or remove from saves!
+
+== Bugs and Requests ==
+
+Let me know if there are any bugs or requests, I'll happily do my best to fix them up!
+
+MIT License | Open to contributions and suggestions!
+  </description>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>Ludeon.RimWorld</li>
+    <li>Ludeon.RimWorld.Royalty</li>
+    <li>Ludeon.RimWorld.Ideology</li>
+    <li>Ludeon.RimWorld.Biotech</li>
+    <li>Ludeon.RimWorld.Anomaly</li>
+  </loadAfter>
+</ModMetaData>
