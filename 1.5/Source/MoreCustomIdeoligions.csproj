@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatcher.cs" />
+    <Compile Include="HarmonyPatch_Page_ConfigureIdeo_DoIdeos.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MoreCustomIdeoligions.cs" />
     <Compile Include="MoreCustomIdeoligionsSettings.cs" />
