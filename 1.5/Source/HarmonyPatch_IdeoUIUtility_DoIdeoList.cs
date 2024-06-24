@@ -22,6 +22,8 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
 
     private static readonly MethodInfo addCustomIdeoInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.AddCustomIdeo));
 
+    private static readonly MethodInfo removeCustomIdeoInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.RemoveCustomIdeo));
+
     private static readonly MethodInfo isCustomIdeoInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.IsCustomIdeo));
 
     private static readonly MethodInfo isLastCustomIdeoInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.IsLastCustomIdeo));
@@ -104,6 +106,9 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
                 yield return code;
                 yield return codes[i + 1];
                 yield return new CodeInstruction(OpCodes.Ldloc_S, 8);
+                yield return new CodeInstruction(OpCodes.Dup);
+                yield return new CodeInstruction(OpCodes.Call, removeCustomIdeoInfo);
+                yield return new CodeInstruction(OpCodes.Pop);
                 i += 4;
                 continue;
             }
