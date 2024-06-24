@@ -60,6 +60,7 @@
     <Compile Include="Log.cs" />
     <Compile Include="MoreCustomIdeoligions.cs" />
     <Compile Include="MoreCustomIdeoligionsSettings.cs" />
+    <Compile Include="MoreCustomIdeoligionsUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
