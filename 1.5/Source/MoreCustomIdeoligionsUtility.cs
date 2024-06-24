@@ -17,6 +17,8 @@ public static class MoreCustomIdeoligionsUtility
 #endif
     private static readonly List<Ideo> customIdeos = [];
 
+    public static void ClearCustomIdeos() => customIdeos.Clear();
+
     public static void AddCustomIdeo(Ideo ideo) => customIdeos.AddDistinct(ideo);
 
     public static bool RemoveCustomIdeo(Ideo ideo) => customIdeos.Remove(ideo);
