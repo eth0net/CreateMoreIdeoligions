@@ -110,4 +110,12 @@ public static class MoreCustomIdeoligionsUtility
 #endif
         return list;
     }
+
+    public static void LoadCustomIdeos(this IdeoManager manager)
+    {
+        foreach (Ideo ideo in customIdeos)
+        {
+            manager.Add(ideo);
+        }
+    }
 }

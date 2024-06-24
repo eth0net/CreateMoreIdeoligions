@@ -57,6 +57,7 @@
     <Compile Include="HarmonyPatcher.cs" />
     <Compile Include="HarmonyPatch_IdeoUIUtility_DoIdeoList.cs" />
     <Compile Include="HarmonyPatch_Page_ConfigureIdeo_DoIdeos.cs" />
+    <Compile Include="HarmonyPatch_Page_ConfigureIdeo_PostOpen.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MoreCustomIdeoligions.cs" />
     <Compile Include="MoreCustomIdeoligionsSettings.cs" />
