@@ -54,10 +54,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefPatcher.cs" />
     <Compile Include="HarmonyPatcher.cs" />
     <Compile Include="HarmonyPatch_Dialog_IdeosDuringLanding_Constructor.cs" />
     <Compile Include="HarmonyPatch_IdeoUIUtility_DoIdeoList.cs" />
     <Compile Include="HarmonyPatch_IdeoUIUtility_DrawIdeoPlate.cs" />
+    <Compile Include="HarmonyPatch_IdeoUIUtility_DrawIdeoRow.cs" />
     <Compile Include="HarmonyPatch_Page_ConfigureIdeo_DoIdeos.cs" />
     <Compile Include="HarmonyPatch_Page_ConfigureIdeo_PostOpen.cs" />
     <Compile Include="Log.cs" />

@@ -9,23 +9,17 @@ namespace MoreCustomIdeoligions;
 /// </summary>
 public class MoreCustomIdeoligionsSettings : ModSettings
 {
-    // /// <summary>
-    // /// The global multiplier applied to the reaction speed
-    // /// </summary>
-    // public static float globalReactionSpeedMultiplier = 1f;
-
-    // /// <summary>
-    // /// The global multiplier applied to the reaction heat bonus
-    // /// </summary>
-    // public static float globalReactionHeatBonusMultiplier = 1f;
+    /// <summary>
+    /// The limit for the number of preferred xenotypes
+    /// </summary>
+    public static int preferredXenotypeLimit = 3;
 
     /// <summary>
     /// Expose data to save/load
     /// </summary>
     public override void ExposeData()
     {
-        // Scribe_Values.Look(ref globalReactionSpeedMultiplier, "globalReactionSpeedMultiplier", 1f);
-        // Scribe_Values.Look(ref globalReactionHeatBonusMultiplier, "globalReactionHeatBonusMultiplier", 1f);
+        Scribe_Values.Look(ref preferredXenotypeLimit, "preferredXenotypeLimit", 3);
         base.ExposeData();
     }
 
@@ -38,11 +32,7 @@ public class MoreCustomIdeoligionsSettings : ModSettings
         Listing_Standard listing_Standard = new();
         listing_Standard.Begin(inRect);
 
-        // listing_Standard.Label("MoreCustomIdeoligions.GlobalReactionSpeedMultiplier".Translate() + ": " + globalReactionSpeedMultiplier);
-        // globalReactionSpeedMultiplier = listing_Standard.Slider(globalReactionSpeedMultiplier, 0.001f, 1000f);
-
-        // listing_Standard.Label("MoreCustomIdeoligions.GlobalReactionHeatBonusMultiplier".Translate() + ": " + globalReactionHeatBonusMultiplier);
-        // globalReactionHeatBonusMultiplier = listing_Standard.Slider(globalReactionHeatBonusMultiplier, 0.001f, 1000f);
+        preferredXenotypeLimit = (int)listing_Standard.SliderLabeled("MoreCustomIdeoligions.PreferredXenotypeLimit".Translate() + ": " + preferredXenotypeLimit, preferredXenotypeLimit, 1, 20);
 
         listing_Standard.Gap();
 
@@ -59,7 +49,6 @@ public class MoreCustomIdeoligionsSettings : ModSettings
     /// </summary>
     public void ResetSettings()
     {
-        // globalReactionSpeedMultiplier = 1f;
-        // globalReactionHeatBonusMultiplier = 1f;
+        preferredXenotypeLimit = 3;
     }
 }
