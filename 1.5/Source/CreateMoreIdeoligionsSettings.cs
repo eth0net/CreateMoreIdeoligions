@@ -2,12 +2,12 @@
 using UnityEngine;
 using Verse;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
 /// <summary>
 /// The settings for the mod
 /// </summary>
-public class MoreCustomIdeoligionsSettings : ModSettings
+public class CreateMoreIdeoligionsSettings : ModSettings
 {
     /// <summary>
     /// The limit for the number of preferred xenotypes
@@ -32,11 +32,11 @@ public class MoreCustomIdeoligionsSettings : ModSettings
         Listing_Standard listing_Standard = new();
         listing_Standard.Begin(inRect);
 
-        preferredXenotypeLimit = (int)listing_Standard.SliderLabeled("MoreCustomIdeoligions.PreferredXenotypeLimit".Translate() + ": " + preferredXenotypeLimit, preferredXenotypeLimit, 1, 20);
+        preferredXenotypeLimit = (int)listing_Standard.SliderLabeled("CreateMoreIdeoligions.PreferredXenotypeLimit".Translate() + ": " + preferredXenotypeLimit, preferredXenotypeLimit, 1, 20);
 
         listing_Standard.Gap();
 
-        if (listing_Standard.ButtonText("MoreCustomIdeoligions.ResetSettings".Translate()))
+        if (listing_Standard.ButtonText("CreateMoreIdeoligions.ResetSettings".Translate()))
         {
             ResetSettings();
         }

@@ -4,6 +4,6 @@
     <exclude>.git</exclude>
     <exclude>1.5\Source</exclude>
     <exclude>Images</exclude>
-    <exclude>MoreCustomIdeoligions.textstudio</exclude>
+    <exclude>CreateMoreIdeoligions.textstudio</exclude>
   </Excluded>
 </Configuration>

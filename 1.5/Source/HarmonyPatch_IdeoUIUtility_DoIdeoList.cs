@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using Verse;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
 [HarmonyPatch(typeof(IdeoUIUtility), nameof(IdeoUIUtility.DoIdeoList))]
 static class HarmonyPatch_IdeoUIUtility_DoIdeoList
@@ -20,15 +20,15 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
 
     private static readonly MethodInfo selectOrMakeNewIdeoInfo = AccessTools.Method(typeof(Page_ConfigureIdeo), nameof(Page_ConfigureIdeo.SelectOrMakeNewIdeo));
 
-    private static readonly MethodInfo addCustomIdeoInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.AddCustomIdeo));
+    private static readonly MethodInfo addCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.AddCustomIdeo));
 
-    private static readonly MethodInfo removeCustomIdeoInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.RemoveCustomIdeo));
+    private static readonly MethodInfo removeCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.RemoveCustomIdeo));
 
-    private static readonly MethodInfo isCustomIdeoInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.IsCustomIdeo));
+    private static readonly MethodInfo isCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.IsCustomIdeo));
 
-    private static readonly MethodInfo isLastCustomIdeoInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.IsLastCustomIdeo));
+    private static readonly MethodInfo isLastCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.IsLastCustomIdeo));
 
-    private static readonly MethodInfo ideosInViewOrderCustomInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.IdeosInViewOrderCustom));
+    private static readonly MethodInfo ideosInViewOrderCustomInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.IdeosInViewOrderCustom));
 
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {

@@ -1,25 +1,25 @@
 ﻿using UnityEngine;
 using Verse;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
 /// <summary>
 /// The main class for the mod
 /// </summary>
-public class MoreCustomIdeoligions : Mod
+public class CreateMoreIdeoligions : Mod
 {
     /// <summary>
     /// The settings for the mod
     /// </summary>
-    public MoreCustomIdeoligionsSettings settings;
+    public CreateMoreIdeoligionsSettings settings;
 
     /// <summary>
     /// Constructor for the mod class to get the settings
     /// </summary>
     /// <param name="content"></param>
-    public MoreCustomIdeoligions(ModContentPack content) : base(content)
+    public CreateMoreIdeoligions(ModContentPack content) : base(content)
     {
-        settings = GetSettings<MoreCustomIdeoligionsSettings>();
+        settings = GetSettings<CreateMoreIdeoligionsSettings>();
     }
 
     /// <summary>
@@ -36,5 +36,5 @@ public class MoreCustomIdeoligions : Mod
     /// Add the settings category
     /// </summary>
     /// <returns></returns>
-    public override string SettingsCategory() => "MoreCustomIdeoligions".Translate();
+    public override string SettingsCategory() => "CreateMoreIdeoligions".Translate();
 }

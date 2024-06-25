@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using Verse;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
 [StaticConstructorOnStartup]
 public static class HarmonyPatcher
@@ -11,7 +11,7 @@ public static class HarmonyPatcher
 #if DEBUG
         Harmony.DEBUG = true;
 #endif
-        Harmony harmony = new("eth0net.MoreCustomIdeoligions");
+        Harmony harmony = new("eth0net.CreateMoreIdeoligions");
         harmony.PatchAll();
     }
 }

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
 [HarmonyPatch(typeof(IdeoUIUtility), nameof(IdeoUIUtility.DrawIdeoPlate))]
 static class HarmonyPatch_IdeoUIUtility_DrawIdeoPlate
 {
-    private static readonly MethodInfo pawnInfo = AccessTools.PropertySetter(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.Pawn));
+    private static readonly MethodInfo pawnInfo = AccessTools.PropertySetter(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.Pawn));
 
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {

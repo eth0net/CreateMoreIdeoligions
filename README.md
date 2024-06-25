@@ -1,4 +1,4 @@
-# ![More Custom Ideoligions](./About/Preview.png)
+# ![Create More Ideoligions](./About/Preview.png)
 
 Make multiple custom ideoligions when starting a save!
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
 [HarmonyPatch(typeof(Page_ConfigureIdeo), nameof(Page_ConfigureIdeo.DoIdeos))]
 static class HarmonyPatch_Page_ConfigureIdeo_DoIdeos

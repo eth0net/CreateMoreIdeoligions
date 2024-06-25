@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using Verse;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
 [HarmonyPatch(typeof(Page_ConfigureIdeo), nameof(Page_ConfigureIdeo.PostOpen))]
 static class HarmonyPatch_Page_ConfigureIdeo_PostOpen
@@ -14,9 +14,9 @@ static class HarmonyPatch_Page_ConfigureIdeo_PostOpen
 
     private static readonly MethodInfo selectOrMakeNewIdeoInfo = AccessTools.Method(typeof(Page_ConfigureIdeo), nameof(Page_ConfigureIdeo.SelectOrMakeNewIdeo));
 
-    private static readonly MethodInfo clearCustomIdeosInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.ClearCustomIdeos));
+    private static readonly MethodInfo clearCustomIdeosInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.ClearCustomIdeos));
 
-    private static readonly MethodInfo loadCustomIdeosInfo = AccessTools.Method(typeof(MoreCustomIdeoligionsUtility), nameof(MoreCustomIdeoligionsUtility.LoadCustomIdeos));
+    private static readonly MethodInfo loadCustomIdeosInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.LoadCustomIdeos));
 
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {

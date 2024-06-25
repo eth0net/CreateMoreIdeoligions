@@ -1,13 +1,13 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
 [StaticConstructorOnStartup]
 static class DefPatcher
 {
     static DefPatcher()
     {
-        PreceptDefOf.PreferredXenotype.maxCount = MoreCustomIdeoligionsSettings.preferredXenotypeLimit;
+        PreceptDefOf.PreferredXenotype.maxCount = CreateMoreIdeoligionsSettings.preferredXenotypeLimit;
     }
 }

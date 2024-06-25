@@ -7,8 +7,8 @@
     <ProjectGuid>{EC340597-D2B7-42E1-A407-AFE3BBF94E30}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MoreCustomIdeoligions</RootNamespace>
-    <AssemblyName>MoreCustomIdeoligions</AssemblyName>
+    <RootNamespace>CreateMoreIdeoligions</RootNamespace>
+    <AssemblyName>CreateMoreIdeoligions</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <LangVersion>preview</LangVersion>
     <FileAlignment>512</FileAlignment>
@@ -63,9 +63,9 @@
     <Compile Include="HarmonyPatch_Page_ConfigureIdeo_DoIdeos.cs" />
     <Compile Include="HarmonyPatch_Page_ConfigureIdeo_PostOpen.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="MoreCustomIdeoligions.cs" />
-    <Compile Include="MoreCustomIdeoligionsSettings.cs" />
-    <Compile Include="MoreCustomIdeoligionsUtility.cs" />
+    <Compile Include="CreateMoreIdeoligions.cs" />
+    <Compile Include="CreateMoreIdeoligionsSettings.cs" />
+    <Compile Include="CreateMoreIdeoligionsUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,9 +8,9 @@ using System.Text;
 #endif
 using Verse;
 
-namespace MoreCustomIdeoligions;
+namespace CreateMoreIdeoligions;
 
-public static class MoreCustomIdeoligionsUtility
+public static class CreateMoreIdeoligionsUtility
 {
 #if DEBUG
     private static string lastLog;

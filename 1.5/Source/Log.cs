@@ -1,8 +1,8 @@
-﻿namespace MoreCustomIdeoligions;
+﻿namespace CreateMoreIdeoligions;
 
 static class Log
 {
-    const string Prefix = "[MoreCustomIdeoligions] ";
+    const string Prefix = "[CreateMoreIdeoligions] ";
 
     public static bool OpenOnMessage
     {

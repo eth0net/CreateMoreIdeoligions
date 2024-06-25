@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoreCustomIdeoligions", "MoreCustomIdeoligions.csproj", "{EC340597-D2B7-42E1-A407-AFE3BBF94E30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateMoreIdeoligions", "CreateMoreIdeoligions.csproj", "{EC340597-D2B7-42E1-A407-AFE3BBF94E30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
