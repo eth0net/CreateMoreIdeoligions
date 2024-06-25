@@ -17,6 +17,23 @@ public static class MoreCustomIdeoligionsUtility
 #endif
     private static readonly List<Ideo> customIdeos = [];
 
+    private static Pawn pawn;
+
+    public static Pawn Pawn
+    {
+        get => pawn;
+        set
+        {
+#if DEBUG
+            if (value != pawn)
+            {
+                Log.Message("Setting pawn to " + value);
+            }
+#endif
+            pawn = value;
+        }
+    }
+
     public static void ClearCustomIdeos() => customIdeos.Clear();
 
     public static void AddCustomIdeo(Ideo ideo) => customIdeos.AddDistinct(ideo);
@@ -117,5 +134,13 @@ public static class MoreCustomIdeoligionsUtility
         {
             manager.Add(ideo);
         }
+    }
+
+    public static void SetPawnIdeo(this Pawn pawn, Ideo ideo)
+    {
+#if DEBUG
+        Log.Warning($"Setting pawn {pawn} to ideo {ideo}");
+#endif
+        pawn?.ideo?.SetIdeo(ideo);
     }
 }
