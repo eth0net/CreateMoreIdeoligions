@@ -1,16 +1,21 @@
-﻿using HarmonyLib;
-using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Emit;
+using HarmonyLib;
+using RimWorld;
 
 namespace CreateMoreIdeoligions;
 
 [HarmonyPatch(typeof(Dialog_IdeosDuringLanding), MethodType.Constructor)]
-static class HarmonyPatch_Dialog_IdeosDuringLanding_Constructor
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "UnusedType.Global")]
+internal static class HarmonyPatch_Dialog_IdeosDuringLanding_Constructor
 {
-    private static readonly MethodInfo pawnInfo = AccessTools.PropertySetter(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.Pawn));
+    private static readonly MethodInfo pawnInfo = AccessTools.PropertySetter(typeof(CreateMoreIdeoligionsUtility),
+        nameof(CreateMoreIdeoligionsUtility.Pawn));
 
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
 #if DEBUG
@@ -20,9 +25,6 @@ static class HarmonyPatch_Dialog_IdeosDuringLanding_Constructor
         yield return new CodeInstruction(OpCodes.Ldnull);
         yield return new CodeInstruction(OpCodes.Call, pawnInfo);
 
-        foreach (CodeInstruction code in instructions)
-        {
-            yield return code;
-        }
+        foreach (var code in instructions) yield return code;
     }
 }

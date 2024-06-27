@@ -1,58 +1,66 @@
-﻿using HarmonyLib;
-using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Emit;
+using HarmonyLib;
+using RimWorld;
 using Verse;
 
 namespace CreateMoreIdeoligions;
 
 [HarmonyPatch(typeof(IdeoUIUtility), nameof(IdeoUIUtility.DoIdeoList))]
-static class HarmonyPatch_IdeoUIUtility_DoIdeoList
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "UnusedType.Global")]
+internal static class HarmonyPatch_IdeoUIUtility_DoIdeoList
 {
-    private static readonly MethodInfo primaryIdeoInfo = AccessTools.PropertyGetter(typeof(FactionIdeosTracker), nameof(FactionIdeosTracker.PrimaryIdeo));
+    private static readonly MethodInfo primaryIdeoInfo =
+        AccessTools.PropertyGetter(typeof(FactionIdeosTracker), nameof(FactionIdeosTracker.PrimaryIdeo));
 
-    private static readonly MethodInfo isMinorInfo = AccessTools.Method(typeof(FactionIdeosTracker), nameof(FactionIdeosTracker.IsMinor));
+    private static readonly MethodInfo ideoManagerInfo =
+        AccessTools.PropertyGetter(typeof(Find), nameof(Find.IdeoManager));
 
-    private static readonly MethodInfo ideoManagerInfo = AccessTools.PropertyGetter(typeof(Find), nameof(Find.IdeoManager));
+    private static readonly MethodInfo ideosInViewOrderInfo =
+        AccessTools.PropertyGetter(typeof(IdeoManager), nameof(IdeoManager.IdeosInViewOrder));
 
-    private static readonly MethodInfo ideosInViewOrderInfo = AccessTools.PropertyGetter(typeof(IdeoManager), nameof(IdeoManager.IdeosInViewOrder));
+    private static readonly FieldInfo selectedIdeoInfo =
+        AccessTools.Field(typeof(IdeoUIUtility), nameof(IdeoUIUtility.selected));
 
-    private static readonly MethodInfo selectOrMakeNewIdeoInfo = AccessTools.Method(typeof(Page_ConfigureIdeo), nameof(Page_ConfigureIdeo.SelectOrMakeNewIdeo));
+    private static readonly MethodInfo removeCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility),
+        nameof(CreateMoreIdeoligionsUtility.RemoveCustomIdeo));
 
-    private static readonly MethodInfo addCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.AddCustomIdeo));
+    private static readonly MethodInfo lastSelectedIdeoInfo =
+        AccessTools.PropertySetter(typeof(CreateMoreIdeoligionsUtility),
+            nameof(CreateMoreIdeoligionsUtility.LastSelectedIdeo));
 
-    private static readonly MethodInfo removeCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.RemoveCustomIdeo));
+    private static readonly MethodInfo isCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility),
+        nameof(CreateMoreIdeoligionsUtility.IsCustomIdeo));
 
-    private static readonly MethodInfo isCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.IsCustomIdeo));
+    private static readonly MethodInfo isLastCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility),
+        nameof(CreateMoreIdeoligionsUtility.IsLastCustomIdeo));
 
-    private static readonly MethodInfo isLastCustomIdeoInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.IsLastCustomIdeo));
+    private static readonly MethodInfo ideosInViewOrderCustomInfo =
+        AccessTools.Method(typeof(CreateMoreIdeoligionsUtility),
+            nameof(CreateMoreIdeoligionsUtility.IdeosInViewOrderCustom));
 
-    private static readonly MethodInfo ideosInViewOrderCustomInfo = AccessTools.Method(typeof(CreateMoreIdeoligionsUtility), nameof(CreateMoreIdeoligionsUtility.IdeosInViewOrderCustom));
-
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         Label? label = null;
 
-        List<CodeInstruction> codes = new(instructions);
+        List<CodeInstruction> codes = [..instructions];
 
-        for (int i = 0; i < codes.Count; i++)
+        for (var i = 0; i < codes.Count; i++)
         {
-            CodeInstruction code = codes[i];
+            var code = codes[i];
 
-            // Catch any custom ideos created by the player
-            if (code.opcode == OpCodes.Stsfld && codes[i - 1].opcode == OpCodes.Ldfld)
+            // Save the selected ideo before create
+            if (code.opcode == OpCodes.Ldloc_0 && codes[i + 2].opcode == OpCodes.Ldnull)
             {
 #if DEBUG
-                Log.Warning("[DoIdeoList] Patching create button");
+                Log.Warning("[DoIdeoList] Patching to save selected ideo before create");
 #endif
-                Label jump = generator.DefineLabel();
-                code.labels.Add(jump);
-
-                yield return new CodeInstruction(OpCodes.Dup);
-                yield return new CodeInstruction(OpCodes.Brfalse, jump);
-                yield return new CodeInstruction(OpCodes.Dup);
-                yield return new CodeInstruction(OpCodes.Call, addCustomIdeoInfo);
+                yield return new CodeInstruction(OpCodes.Ldsfld, selectedIdeoInfo);
+                yield return new CodeInstruction(OpCodes.Call, lastSelectedIdeoInfo);
             }
 
             // Replace IdeoManager.IdeosInViewOrder with MoreCustomIdeosUtility.IdeosInViewOrderCustom
@@ -114,7 +122,8 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
             }
 
             // Exit the loop if the ideo is not the last custom ideo, skipping the faction header
-            if (code.opcode == OpCodes.Ldloc_0 && codes[i - 1].opcode == OpCodes.Stfld && codes[i + 1].opcode == OpCodes.Ldstr)
+            if (code.opcode == OpCodes.Ldloc_0 && codes[i - 1].opcode == OpCodes.Stfld &&
+                codes[i + 1].opcode == OpCodes.Ldstr)
             {
 #if DEBUG
                 Log.Warning("[DoIdeoList] Patching skip faction ideos label");

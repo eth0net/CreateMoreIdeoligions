@@ -1,54 +1,54 @@
-﻿using RimWorld;
+﻿using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using Verse;
 
 namespace CreateMoreIdeoligions;
 
 /// <summary>
-/// The settings for the mod
+///     The settings for the mod
 /// </summary>
 public class CreateMoreIdeoligionsSettings : ModSettings
 {
     /// <summary>
-    /// The limit for the number of preferred xenotypes
+    ///     The limit for the number of preferred xenotypes
     /// </summary>
-    public static int preferredXenotypeLimit = 3;
+    public static int PreferredXenotypeLimit = 3;
 
     /// <summary>
-    /// Expose data to save/load
+    ///     Expose data to save/load
     /// </summary>
     public override void ExposeData()
     {
-        Scribe_Values.Look(ref preferredXenotypeLimit, "preferredXenotypeLimit", 3);
+        Scribe_Values.Look(ref PreferredXenotypeLimit, "preferredXenotypeLimit", 3);
         base.ExposeData();
     }
 
     /// <summary>
-    /// Draw the settings window
+    ///     Draw the settings window
     /// </summary>
     /// <param name="inRect"></param>
-    public void DoSettingsWindowContents(Rect inRect)
+    public static void DoSettingsWindowContents(Rect inRect)
     {
-        Listing_Standard listing_Standard = new();
-        listing_Standard.Begin(inRect);
+        Listing_Standard listingStandard = new();
+        listingStandard.Begin(inRect);
 
-        preferredXenotypeLimit = (int)listing_Standard.SliderLabeled("CreateMoreIdeoligions.PreferredXenotypeLimit".Translate() + ": " + preferredXenotypeLimit, preferredXenotypeLimit, 1, 20);
+        PreferredXenotypeLimit = (int)listingStandard.SliderLabeled(
+            "CreateMoreIdeoligions.PreferredXenotypeLimit".Translate() + ": " + PreferredXenotypeLimit,
+            PreferredXenotypeLimit, 1, 20);
 
-        listing_Standard.Gap();
+        listingStandard.Gap();
 
-        if (listing_Standard.ButtonText("CreateMoreIdeoligions.ResetSettings".Translate()))
-        {
-            ResetSettings();
-        }
+        if (listingStandard.ButtonText("CreateMoreIdeoligions.ResetSettings".Translate())) ResetSettings();
 
-        listing_Standard.End();
+        listingStandard.End();
     }
 
     /// <summary>
-    /// Reset the settings to default
+    ///     Reset the settings to default
     /// </summary>
-    public void ResetSettings()
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    public static void ResetSettings()
     {
-        preferredXenotypeLimit = 3;
+        PreferredXenotypeLimit = 3;
     }
 }

@@ -1,53 +1,81 @@
-﻿using HarmonyLib;
-using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using RimWorld;
+using Verse;
 #if DEBUG
+using HarmonyLib;
 using System.Text;
 #endif
-using Verse;
 
 namespace CreateMoreIdeoligions;
 
 public static class CreateMoreIdeoligionsUtility
 {
 #if DEBUG
-    private static string lastLog;
+    private static string _lastLog;
 #endif
     private static readonly List<Ideo> customIdeos = [];
 
-    private static Pawn pawn;
+    private static Ideo _lastSelectedIdeo;
 
-    public static Pawn Pawn
+    private static Pawn _pawn;
+
+    public static Ideo LastSelectedIdeo
     {
-        get => pawn;
+        get => _lastSelectedIdeo;
         set
         {
 #if DEBUG
-            if (value != pawn)
-            {
-                Log.Message("Setting pawn to " + value);
-            }
+            if (value != _lastSelectedIdeo) Log.Message("Setting last ideo to " + value);
 #endif
-            pawn = value;
+            _lastSelectedIdeo = value;
         }
     }
 
-    public static void ClearCustomIdeos() => customIdeos.Clear();
+    public static Pawn Pawn
+    {
+        get => _pawn;
+        set
+        {
+#if DEBUG
+            if (value != _pawn) Log.Message("Setting pawn to " + value);
+#endif
+            _pawn = value;
+        }
+    }
 
-    public static void AddCustomIdeo(Ideo ideo) => customIdeos.AddDistinct(ideo);
+    public static void ClearCustomIdeos()
+    {
+        customIdeos.Clear();
+    }
 
-    public static bool RemoveCustomIdeo(Ideo ideo) => customIdeos.Remove(ideo);
+    public static void AddCustomIdeo(Ideo ideo)
+    {
+        customIdeos.AddDistinct(ideo);
+    }
 
-    public static bool IsCustomIdeo(Ideo ideo) => customIdeos.Contains(ideo);
+    public static bool RemoveCustomIdeo(Ideo ideo)
+    {
+        return customIdeos.Remove(ideo);
+    }
 
-    public static bool IsLastCustomIdeo(this IdeoManager manager, Ideo ideo) => manager.LastCustomIdeo() == ideo;
+    public static bool IsCustomIdeo(Ideo ideo)
+    {
+        return customIdeos.Contains(ideo);
+    }
 
+    public static bool IsLastCustomIdeo(this IdeoManager manager, Ideo ideo)
+    {
+        return manager.LastCustomIdeo() == ideo;
+    }
+
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public static Ideo LastCustomIdeo(this IdeoManager manager)
     {
-        var ideos = manager.IdeosInViewOrderCustom().Where(IsCustomIdeo);
-        return ideos.Count() > 0 ? ideos.Last() : null;
+        var ideos = manager.IdeosInViewOrderCustom().Where(IsCustomIdeo).ToList();
+        return ideos.Any() ? ideos.Last() : null;
     }
 
     public static IEnumerable<Ideo> IdeosInViewOrderCustom(this IdeoManager manager)
@@ -55,55 +83,59 @@ public static class CreateMoreIdeoligionsUtility
 #if DEBUG
         StringBuilder logs = new("IdeosInViewOrderCustom\n\n");
 #endif
-        IEnumerable<Faction> factions = Find.FactionManager.AllFactionsInViewOrder;
+        var factions = Find.FactionManager.AllFactionsInViewOrder;
 
-        IEnumerable<Ideo> list = manager.IdeosListForReading.Where(ideo => !ideo.hidden).OrderBy(ideo =>
-        {
-            int factionIndex = 0;
-            int ideoScore = int.MaxValue;
-
-            foreach (Faction faction in factions)
+#if DEBUG
+        IEnumerable<Ideo> ideos = manager.
+#else
+        return manager.
+#endif
+            IdeosListForReading.Where(ideo => !ideo.hidden).OrderBy(ideo =>
             {
-                FactionIdeosTracker factionIdeos = faction.ideos;
+                var factionIndex = 0;
+                var ideoScore = int.MaxValue;
 
-                if (factionIdeos != null && !ideo.hidden)
+                foreach (var faction in factions)
                 {
-                    if (faction.IsPlayer)
+                    var factionIdeos = faction.ideos;
+
+                    if (factionIdeos != null && !ideo.hidden)
                     {
-                        if (factionIdeos.IsPrimary(ideo))
+                        if (faction.IsPlayer)
                         {
+                            if (factionIdeos.IsPrimary(ideo))
+                            {
 #if DEBUG
-                            logs.Append("Primary Ideo: " + ideo.ToString() + " Score: " + ideoScore + "\n");
+                                logs.Append("Primary Ideo: " + ideo + " Score: " + ideoScore + "\n");
 #endif
-                            return int.MinValue;
+                                return int.MinValue;
+                            }
+
+                            if (IsCustomIdeo(ideo))
+                            {
+#if DEBUG
+                                logs.Append("Minor Ideo: " + ideo + " Score: " + ideoScore + "\n");
+#endif
+                                return int.MinValue + 1;
+                            }
                         }
 
-                        if (IsCustomIdeo(ideo))
-                        {
-#if DEBUG
-                            logs.Append("Minor Ideo: " + ideo.ToString() + " Score: " + ideoScore + "\n");
-#endif
-                            return int.MinValue + 1;
-                        }
+                        if (factionIdeos.IsPrimary(ideo)) ideoScore = Math.Min(ideoScore, factionIndex);
                     }
 
-                    if (factionIdeos.IsPrimary(ideo))
-                    {
-                        ideoScore = Math.Min(ideoScore, factionIndex);
-                    }
+                    factionIndex++;
                 }
-
-                factionIndex++;
-            }
 #if DEBUG
-            logs.Append("Ideo: " + ideo.ToString() + " Score: " + ideoScore + "\n");
+                logs.Append("Ideo: " + ideo + " Score: " + ideoScore + "\n");
 #endif
-            return ideoScore;
-        });
+                return ideoScore;
+            });
 #if DEBUG
-        string listStr = list.Join(ideo => ideo.ToString(), "\n");
-        string playerIdeosStr = Faction.OfPlayer.ideos.AllIdeos.Join(ideo => ideo.ToString());
-        string customIdeosStr = customIdeos.Join(ideo => ideo.ToString(), "\n");
+        var list = ideos.ToList();
+        var listStr = list.Join(ideo => ideo.ToString(), "\n");
+        var playerIdeosStr = Faction.OfPlayer.ideos.AllIdeos.Join(ideo => ideo.ToString());
+        var customIdeosStr = customIdeos.Join(ideo => ideo.ToString(), "\n");
+        var playerPrimaryIdeo = Faction.OfPlayer.ideos.PrimaryIdeo;
 
         logs.Append("\n\n");
         logs.Append("All Ideos:\n\n");
@@ -115,25 +147,23 @@ public static class CreateMoreIdeoligionsUtility
         logs.Append("Custom Ideos:\n\n");
         logs.Append(customIdeosStr);
         logs.Append("\n\n");
+        logs.Append($"Last Selected Ideo: {_lastSelectedIdeo}\n\n");
+        logs.Append($"Player primary: {playerPrimaryIdeo}\n\n");
 
+        var log = logs.ToString();
 
-        string log = logs.ToString();
+        if (_lastLog == log) return list;
 
-        if (lastLog != log)
-        {
-            Log.Warning("BOOM " + log);
-            lastLog = log;
-        }
-#endif
+        Log.Warning("BOOM " + log);
+        _lastLog = log;
+
         return list;
+#endif
     }
 
     public static void LoadCustomIdeos(this IdeoManager manager)
     {
-        foreach (Ideo ideo in customIdeos)
-        {
-            manager.Add(ideo);
-        }
+        foreach (var ideo in customIdeos) manager.Add(ideo);
     }
 
     public static void SetPawnIdeo(this Pawn pawn, Ideo ideo)

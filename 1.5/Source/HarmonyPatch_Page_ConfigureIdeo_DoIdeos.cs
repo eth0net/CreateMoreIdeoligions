@@ -1,19 +1,24 @@
-﻿using HarmonyLib;
-using RimWorld;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Emit;
+using HarmonyLib;
+using RimWorld;
 
 namespace CreateMoreIdeoligions;
 
 [HarmonyPatch(typeof(Page_ConfigureIdeo), nameof(Page_ConfigureIdeo.DoIdeos))]
-static class HarmonyPatch_Page_ConfigureIdeo_DoIdeos
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "UnusedType.Global")]
+internal static class HarmonyPatch_Page_ConfigureIdeo_DoIdeos
 {
-    private static readonly MethodInfo playerPrimaryIdeoNotSharedInfo = AccessTools.PropertyGetter(typeof(IdeoUIUtility), nameof(IdeoUIUtility.PlayerPrimaryIdeoNotShared));
+    private static readonly MethodInfo playerPrimaryIdeoNotSharedInfo =
+        AccessTools.PropertyGetter(typeof(IdeoUIUtility), nameof(IdeoUIUtility.PlayerPrimaryIdeoNotShared));
 
-    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        foreach (CodeInstruction code in instructions)
+        foreach (var code in instructions)
         {
             if (code.Calls(playerPrimaryIdeoNotSharedInfo))
             {
