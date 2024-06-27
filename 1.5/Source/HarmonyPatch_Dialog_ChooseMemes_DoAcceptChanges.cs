@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
 using RimWorld;
-#if DEBUG
-#endif
 
 namespace CreateMoreIdeoligions;
 
