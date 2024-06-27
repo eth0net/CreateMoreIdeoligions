@@ -22,7 +22,7 @@ static class HarmonyPatch_IdeoUIUtility_DrawIdeoPlate
             if (i > 1 && codes[i - 2].opcode == OpCodes.Ldarg_1 && codes[i - 1].opcode == OpCodes.Call)
             {
 #if DEBUG
-                Log.Warning($"Patching DrawIdeoPlate to save pawn");
+                Log.Warning($"[DrawIdeoPlate] Patching to save pawn");
 #endif
                 yield return new CodeInstruction(OpCodes.Ldarg_2);
                 yield return new CodeInstruction(OpCodes.Call, pawnInfo);

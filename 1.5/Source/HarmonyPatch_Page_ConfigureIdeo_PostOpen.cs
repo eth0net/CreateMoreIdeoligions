@@ -27,12 +27,18 @@ static class HarmonyPatch_Page_ConfigureIdeo_PostOpen
             CodeInstruction code = codes[i];
             if (code.opcode == OpCodes.Ldarg_0 && codes[i + 2].Calls(selectOrMakeNewIdeoInfo))
             {
+#if DEBUG
+                Log.Warning("[PostOpen] Patching to load custom ideos");
+#endif
                 yield return new CodeInstruction(OpCodes.Call, findIdeoManagerInfo);
                 yield return new CodeInstruction(OpCodes.Call, loadCustomIdeosInfo);
             }
 
             if (code.opcode == OpCodes.Ldstr)
             {
+#if DEBUG
+                Log.Warning("[PostOpen] Patching to clear custom ideos");
+#endif
                 yield return new CodeInstruction(OpCodes.Call, clearCustomIdeosInfo);
             }
 

@@ -44,7 +44,7 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
             if (code.opcode == OpCodes.Stsfld && codes[i - 1].opcode == OpCodes.Ldfld)
             {
 #if DEBUG
-                Log.Warning("Patching AddCustomIdeo into SelectOrMakeNewIdeo");
+                Log.Warning("[DoIdeoList] Patching create button");
 #endif
                 Label jump = generator.DefineLabel();
                 code.labels.Add(jump);
@@ -59,17 +59,17 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
             if (code.Calls(ideosInViewOrderInfo))
             {
 #if DEBUG
-                Log.Warning("Patching IdeosInViewOrder");
+                Log.Warning("[DoIdeoList] Patching list method");
 #endif
                 yield return new CodeInstruction(OpCodes.Call, ideosInViewOrderCustomInfo);
                 continue;
             }
 
-            // Replace factionIdeos.PrimaryIdeo with factionIdeos.Has
+            // Replace factionIdeos.PrimaryIdeo with IsCustomIdeo
             if (code.Calls(primaryIdeoInfo) && codes[i + 1].opcode == OpCodes.Bne_Un)
             {
 #if DEBUG
-                Log.Warning("Patching PrimaryIdeo");
+                Log.Warning("[DoIdeoList] Patching custom ideo check");
 #endif
                 i += 1; // skip the next instruction
                 yield return new CodeInstruction(OpCodes.Call, isCustomIdeoInfo);
@@ -81,7 +81,7 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
             if (label == null && code.opcode == OpCodes.Br)
             {
 #if DEBUG
-                Log.Warning("Found label");
+                Log.Warning("[DoIdeoList] Patching to find loop label");
 #endif
                 label = (Label)code.operand;
             }
@@ -90,7 +90,7 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
             if (code.opcode == OpCodes.Ldloc_1)
             {
 #if DEBUG
-                Log.Warning("Patching skip delete button");
+                Log.Warning("[DoIdeoList] Patching delete button conditions");
 #endif
                 yield return new CodeInstruction(OpCodes.Ldloc_S, 8);
                 yield return new CodeInstruction(OpCodes.Call, isCustomIdeoInfo);
@@ -101,7 +101,7 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
             if (code.opcode == OpCodes.Stloc_S && codes[i - 1].opcode == OpCodes.Newobj)
             {
 #if DEBUG
-                Log.Warning("Patching delete button ideo");
+                Log.Warning("[DoIdeoList] Patching delete button ideo");
 #endif
                 yield return code;
                 yield return codes[i + 1];
@@ -117,7 +117,7 @@ static class HarmonyPatch_IdeoUIUtility_DoIdeoList
             if (code.opcode == OpCodes.Ldloc_0 && codes[i - 1].opcode == OpCodes.Stfld && codes[i + 1].opcode == OpCodes.Ldstr)
             {
 #if DEBUG
-                Log.Warning("Patching skip faction ideos label");
+                Log.Warning("[DoIdeoList] Patching skip faction ideos label");
 #endif
                 // replace with nop to preserve labels
                 code.opcode = OpCodes.Nop;

@@ -13,6 +13,10 @@ static class HarmonyPatch_Dialog_IdeosDuringLanding_Constructor
 
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
+#if DEBUG
+        Log.Warning("[Dialog_IdeosDuringLanding] Patching to reset pawn");
+#endif
+
         yield return new CodeInstruction(OpCodes.Ldnull);
         yield return new CodeInstruction(OpCodes.Call, pawnInfo);
 

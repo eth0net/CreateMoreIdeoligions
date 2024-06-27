@@ -24,7 +24,7 @@ static class HarmonyPatch_IdeoUIUtility_DrawIdeoRow
             if (code.opcode == OpCodes.Ldarg_0 && codes[i + 1].opcode == OpCodes.Stsfld)
             {
 #if DEBUG
-                Log.Warning($"Patching DrawIdeoRow to update pawn ideo");
+                Log.Warning($"[DrawIdeoRow] Patching to update pawn ideo");
 #endif
                 yield return new CodeInstruction(OpCodes.Call, pawnInfo);
                 yield return new CodeInstruction(OpCodes.Ldarg_0);

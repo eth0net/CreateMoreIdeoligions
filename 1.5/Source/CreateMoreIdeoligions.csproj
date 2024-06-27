@@ -58,6 +58,7 @@
     <Compile Include="HarmonyPatcher.cs" />
     <Compile Include="HarmonyPatch_Dialog_IdeosDuringLanding_Constructor.cs" />
     <Compile Include="HarmonyPatch_IdeoUIUtility_DoIdeoList.cs" />
+    <Compile Include="HarmonyPatch_IdeoUIUtility_DoInitialIdeoSelection.cs" />
     <Compile Include="HarmonyPatch_IdeoUIUtility_DrawIdeoPlate.cs" />
     <Compile Include="HarmonyPatch_IdeoUIUtility_DrawIdeoRow.cs" />
     <Compile Include="HarmonyPatch_Page_ConfigureIdeo_DoIdeos.cs" />

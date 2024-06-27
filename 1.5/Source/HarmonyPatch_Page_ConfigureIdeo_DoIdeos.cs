@@ -17,6 +17,9 @@ static class HarmonyPatch_Page_ConfigureIdeo_DoIdeos
         {
             if (code.Calls(playerPrimaryIdeoNotSharedInfo))
             {
+#if DEBUG
+                Log.Warning("[DoIdeos] Patching to always show create");
+#endif
                 yield return new CodeInstruction(OpCodes.Ldc_I4_0);
                 continue;
             }
