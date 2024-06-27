@@ -103,13 +103,13 @@ public static class CreateMoreIdeoligionsUtility
                     {
                         if (faction.IsPlayer)
                         {
-                            if (factionIdeos.IsPrimary(ideo))
-                            {
-#if DEBUG
-                                logs.Append("Primary Ideo: " + ideo + " Score: " + ideoScore + "\n");
-#endif
-                                return int.MinValue;
-                            }
+//                             if (factionIdeos.IsPrimary(ideo))
+//                             {
+// #if DEBUG
+//                                 logs.Append("Primary Ideo: " + ideo + " Score: " + ideoScore + "\n");
+// #endif
+//                                 return int.MinValue;
+//                             }
 
                             if (IsCustomIdeo(ideo))
                             {
