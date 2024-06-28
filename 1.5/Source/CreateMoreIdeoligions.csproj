@@ -16,17 +16,9 @@
         <OutputPath>..\Assemblies\</OutputPath>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Krafs.Publicizer">
-            <Version>2.2.1</Version>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="Krafs.Rimworld.Ref">
-            <Version>1.5.4104</Version>
-        </PackageReference>
-        <PackageReference Include="Lib.Harmony" ExcludeAssets="runtime">
-            <Version>2.3.3</Version>
-        </PackageReference>
+        <PackageReference Include="Krafs.Publicizer" Version="2.2.1" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all"/>
+        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4104"/>
+        <PackageReference Include="Lib.Harmony" ExcludeAssets="runtime" Version="2.3.3"/>
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
         <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0"/>
     </ItemGroup>
