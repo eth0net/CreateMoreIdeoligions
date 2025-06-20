@@ -59,7 +59,6 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="Lib.Harmony" Version="2.*" ExcludeAssets="runtime" />
     <PackageReference Include="Krafs.Publicizer" Version="2.2.1" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" PrivateAssets="all" />
-
   </ItemGroup>
 
   <!-- <ItemGroup Condition="'@(Reference->WithMetadataValue('Identity', 'Assembly-CSharp')->Metadata('HintPath')->Exists())' == ''"> -->
